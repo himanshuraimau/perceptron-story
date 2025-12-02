@@ -14,6 +14,7 @@ import { AnimatedStat } from "@/components/animated-stat"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { BentoBox } from "@/components/bento-box"
 import { GradientDescentVis } from "@/components/GradientDescentVis"
+import { NumericalExamples } from "@/components/numerical-examples"
 
 export default function Page() {
   const { scrollY } = useScroll()
@@ -208,6 +209,13 @@ export default function Page() {
 
              <GradientDescentVis />
           </div>
+        </ScrollReveal>
+      </SwissSection>
+
+      {/* 6.5 NUMERICAL EXAMPLES */}
+      <SwissSection id="numerical-examples" title="Numerical Examples" accent="blue">
+        <ScrollReveal>
+          <NumericalExamples />
         </ScrollReveal>
       </SwissSection>
 

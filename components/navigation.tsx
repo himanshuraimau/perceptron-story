@@ -21,7 +21,8 @@ export function Navigation() {
   const sections = [
     { label: "Intro", href: "#introduction" },
     { label: "Linear", href: "#mathematics" },
-    { label: "Opt", href: "#optimization" }, 
+    { label: "Opt", href: "#optimization" },
+    { label: "Examples", href: "#numerical-examples" }, // NEW
     { label: "XOR Flaw", href: "#xor-limitation" },
     { label: "Multi-Layer", href: "#mlp-explainer" }, // NEW
     { label: "Deep Lab", href: "#mlp-lab" }, // NEW
