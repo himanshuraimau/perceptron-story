@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback, useEffect } from "react"
+import { useState, useCallback, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { RefreshCw, Plus, Play, FastForward } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -31,6 +31,7 @@ interface TrainingStep {
   newBias: number
   misclassifiedCount: number
   calculatedOutput: number
+  sum: number
 }
 
 type ProblemType = "random" | "and" | "or"
@@ -48,6 +49,10 @@ export function TrainingLab() {
   const [highlightedPoint, setHighlightedPoint] = useState<number | null>(null)
   const [hasConverged, setHasConverged] = useState<boolean>(false)
   const [currentStep, setCurrentStep] = useState<number>(-1)
+  const [maxEpochs] = useState<number>(1000) // Maximum epochs to prevent infinite loops
+  const autoTrainIntervalRef = useRef<NodeJS.Timeout | null>(null)
+  const stepCountRef = useRef<number>(0)
+  const maxStepsRef = useRef<number>(0)
 
   // Data generation controls
   const [numPoints, setNumPoints] = useState<number>(20)
@@ -108,6 +113,14 @@ export function TrainingLab() {
 
   // Generate data
   const generateData = useCallback(() => {
+    // Clear any running interval
+    if (autoTrainIntervalRef.current) {
+      clearInterval(autoTrainIntervalRef.current)
+      autoTrainIntervalRef.current = null
+    }
+    stepCountRef.current = 0
+    maxStepsRef.current = 0
+    
     const newData = generateProblemData(problemType, numPoints)
     setDataPoints(newData)
     setWeights([Math.random() * 2 - 1, Math.random() * 2 - 1])
@@ -117,6 +130,7 @@ export function TrainingLab() {
     setWeightHistory([])
     setHighlightedPoint(null)
     setHasConverged(false)
+    setIsTraining(false)
     setCurrentStep(-1)
   }, [problemType, numPoints, generateProblemData])
 
@@ -139,12 +153,20 @@ export function TrainingLab() {
 
   // Perform one training step
   const performTrainingStep = useCallback(() => {
+    // Check if max epochs reached
+    if (currentEpoch >= maxEpochs) {
+      setHasConverged(true)
+      setIsTraining(false)
+      return false
+    }
+
     const updatedPoints = getMisclassifiedPoints()
     const misclassified = updatedPoints.filter((p) => p.misclassified)
 
     if (misclassified.length === 0) {
       setHasConverged(true)
-      return
+      setIsTraining(false)
+      return false
     }
 
     // Pick first misclassified point
@@ -153,13 +175,14 @@ export function TrainingLab() {
 
     setHighlightedPoint(pointIndex)
 
-    // Calculate output and error
-    const output = calculateOutput(pointToUpdate)
-    const error = pointToUpdate.label - output
-
-    // Store old values
+    // Store old values BEFORE calculating output
     const oldWeights: [number, number] = [...weights]
     const oldBias = bias
+
+    // Calculate sum and output using OLD weights
+    const sum = oldWeights[0] * pointToUpdate.x + oldWeights[1] * pointToUpdate.y + oldBias
+    const output = sum > 0 ? 1 : -1
+    const error = pointToUpdate.label - output
 
     // Update weights (Perceptron Learning Rule)
     const newW1 = weights[0] + learningRate * error * pointToUpdate.x
@@ -181,38 +204,82 @@ export function TrainingLab() {
       newBias,
       misclassifiedCount: misclassified.length,
       calculatedOutput: output,
+      sum,
     }
 
+    const newHistoryLength = trainingHistory.length
     setTrainingHistory((prev) => [...prev, newStep])
     setWeightHistory((prev) => [...prev, { epoch: currentEpoch + 1, w1: newW1, w2: newW2 }])
     setCurrentEpoch((prev) => prev + 1)
-    setCurrentStep((prev) => prev + 1)
+    setCurrentStep(newHistoryLength) // Set to the index of the new step (0-based)
 
     setTimeout(() => setHighlightedPoint(null), 800)
-  }, [getMisclassifiedPoints, calculateOutput, weights, bias, learningRate, currentEpoch])
+    
+    return true
+  }, [getMisclassifiedPoints, calculateOutput, weights, bias, learningRate, currentEpoch, trainingHistory.length, maxEpochs])
 
   // Auto-train for multiple steps
   const autoTrain = useCallback(
     (steps: number) => {
-      setIsTraining(true)
-      let stepCount = 0
+      // Clear any existing interval
+      if (autoTrainIntervalRef.current) {
+        clearInterval(autoTrainIntervalRef.current)
+        autoTrainIntervalRef.current = null
+      }
 
-      const interval = setInterval(() => {
-        if (stepCount >= steps || hasConverged) {
-          clearInterval(interval)
+      setIsTraining(true)
+      stepCountRef.current = 0
+      maxStepsRef.current = steps
+
+      const runStep = () => {
+        if (stepCountRef.current >= maxStepsRef.current) {
+          if (autoTrainIntervalRef.current) {
+            clearInterval(autoTrainIntervalRef.current)
+            autoTrainIntervalRef.current = null
+          }
           setIsTraining(false)
           return
         }
 
-        performTrainingStep()
-        stepCount++
-      }, 600)
+        const canContinue = performTrainingStep()
+        if (!canContinue) {
+          if (autoTrainIntervalRef.current) {
+            clearInterval(autoTrainIntervalRef.current)
+            autoTrainIntervalRef.current = null
+          }
+          setIsTraining(false)
+          return
+        }
+        
+        stepCountRef.current++
+      }
+
+      autoTrainIntervalRef.current = setInterval(runStep, 600)
     },
-    [performTrainingStep, hasConverged],
+    [performTrainingStep],
   )
+
+  // Stop training
+  const stopTraining = useCallback(() => {
+    if (autoTrainIntervalRef.current) {
+      clearInterval(autoTrainIntervalRef.current)
+      autoTrainIntervalRef.current = null
+    }
+    setIsTraining(false)
+    stepCountRef.current = 0
+    maxStepsRef.current = 0
+  }, [])
 
   // Reset training
   const resetTraining = useCallback(() => {
+    // Clear any running interval
+    if (autoTrainIntervalRef.current) {
+      clearInterval(autoTrainIntervalRef.current)
+      autoTrainIntervalRef.current = null
+    }
+    stepCountRef.current = 0
+    maxStepsRef.current = 0
+    
     setWeights([Math.random() * 2 - 1, Math.random() * 2 - 1])
     setBias(Math.random() * 2 - 1)
     setCurrentEpoch(0)
@@ -220,12 +287,23 @@ export function TrainingLab() {
     setWeightHistory([])
     setHighlightedPoint(null)
     setHasConverged(false)
+    setIsTraining(false)
     setCurrentStep(-1)
   }, [])
 
   // Initialize on mount
   useEffect(() => {
     generateData()
+    
+    // Cleanup on unmount
+    return () => {
+      if (autoTrainIntervalRef.current) {
+        clearInterval(autoTrainIntervalRef.current)
+        autoTrainIntervalRef.current = null
+      }
+      stepCountRef.current = 0
+      maxStepsRef.current = 0
+    }
   }, [])
 
   // Get line points for decision boundary
@@ -385,22 +463,34 @@ export function TrainingLab() {
               icon={<Plus size={18} />}
               label="Step Forward"
             />
-            <div className="grid grid-cols-2 gap-3">
+            
+            {isTraining ? (
               <ActionButton
-                onClick={() => autoTrain(10)}
-                disabled={isTraining || hasConverged}
-                color="black"
-                icon={<Play size={18} />}
-                label="10 Steps"
-              />
-              <ActionButton
-                onClick={() => autoTrain(100)}
-                disabled={isTraining || hasConverged}
+                onClick={stopTraining}
+                disabled={false}
                 color="red"
-                icon={<FastForward size={18} />}
-                label="Run Auto"
+                icon={<span className="text-xl">⏹</span>}
+                label="Stop Training"
               />
-            </div>
+            ) : (
+              <div className="grid grid-cols-2 gap-3">
+                <ActionButton
+                  onClick={() => autoTrain(10)}
+                  disabled={hasConverged}
+                  color="black"
+                  icon={<Play size={18} />}
+                  label="10 Steps"
+                />
+                <ActionButton
+                  onClick={() => autoTrain(100)}
+                  disabled={hasConverged}
+                  color="red"
+                  icon={<FastForward size={18} />}
+                  label="Run Auto"
+                />
+              </div>
+            )}
+            
             <button
               onClick={resetTraining}
               className="w-full py-2 text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-black transition-colors"
@@ -458,6 +548,9 @@ export function TrainingLab() {
                       </div>
                       <div className="text-xs text-gray-900">
                         = {lastStep.oldWeights[0].toFixed(3)} × {lastStep.point.x.toFixed(3)} + {lastStep.oldWeights[1].toFixed(3)} × {lastStep.point.y.toFixed(3)} + {lastStep.oldBias.toFixed(3)}
+                      </div>
+                      <div className="text-xs text-gray-900 font-bold">
+                        = {lastStep.sum.toFixed(3)}
                       </div>
                       <div className="pt-2 border-t border-[#ff0000]/20">
                         Output: <b className="text-[#ff0000]">o = {lastStep.calculatedOutput}</b>
@@ -525,6 +618,28 @@ export function TrainingLab() {
                   </div>
                 </div>
 
+                {/* Verification with New Weights */}
+                <div className="p-4 bg-green-50 border-l-4 border-green-600">
+                  <div className="text-xs font-bold uppercase text-green-700 mb-2">✓ Verification with Updated Weights</div>
+                  <div className="font-mono text-sm space-y-1 text-gray-900">
+                    <div className="text-xs text-gray-900">
+                      sum = w₁x₁ + w₂x₂ + b
+                    </div>
+                    <div className="text-xs text-gray-900">
+                      = {lastStep.newWeights[0].toFixed(3)} × {lastStep.point.x.toFixed(3)} + {lastStep.newWeights[1].toFixed(3)} × {lastStep.point.y.toFixed(3)} + {lastStep.newBias.toFixed(3)}
+                    </div>
+                    <div className="text-xs text-gray-900 font-bold">
+                      = {(lastStep.newWeights[0] * lastStep.point.x + lastStep.newWeights[1] * lastStep.point.y + lastStep.newBias).toFixed(3)}
+                    </div>
+                    <div className="pt-2 border-t border-green-600/20">
+                      New Output: <b className="text-green-700">o = {(lastStep.newWeights[0] * lastStep.point.x + lastStep.newWeights[1] * lastStep.point.y + lastStep.newBias) > 0 ? 1 : -1}</b>
+                      <span className="ml-2 text-green-600">
+                        {((lastStep.newWeights[0] * lastStep.point.x + lastStep.newWeights[1] * lastStep.point.y + lastStep.newBias) > 0 ? 1 : -1) === lastStep.point.label ? '✓ Correct!' : '✗ Still wrong'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Step Navigation */}
                 {trainingHistory.length > 1 && (
                   <div className="pt-4 border-t-2 border-dashed border-black/10">
@@ -554,7 +669,7 @@ export function TrainingLab() {
       </AnimatePresence>
 
       {/* Convergence Banner */}
-      {hasConverged && (
+      {hasConverged && misclassifiedCount === 0 && (
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -578,6 +693,43 @@ export function TrainingLab() {
               <div className="p-4 bg-white border-2 border-green-600">
                 <div className="text-xs uppercase font-bold text-gray-500 mb-1">Final w₂</div>
                 <div className="text-2xl font-black font-mono text-green-700">{weights[1].toFixed(3)}</div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
+      {/* Max Epochs Reached Banner */}
+      {hasConverged && misclassifiedCount > 0 && currentEpoch >= maxEpochs && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="border-4 border-yellow-600 bg-yellow-50 p-8 shadow-[8px_8px_0px_0px_rgba(202,138,4,0.3)]"
+        >
+          <div className="text-center space-y-4">
+            <div className="text-6xl">⚠</div>
+            <h3 className="font-black text-3xl uppercase tracking-tighter text-yellow-700">Maximum Epochs Reached</h3>
+            <p className="text-lg text-yellow-800">
+              Training stopped after <b>{maxEpochs}</b> epochs. The data may not be linearly separable.
+            </p>
+            <p className="text-sm text-yellow-700">
+              Still {misclassifiedCount} misclassified point{misclassifiedCount !== 1 ? 's' : ''} remaining.
+              Try regenerating the data or reducing the noise level.
+            </p>
+            <div className="grid grid-cols-3 gap-6 mt-6 max-w-2xl mx-auto">
+              <div className="p-4 bg-white border-2 border-yellow-600">
+                <div className="text-xs uppercase font-bold text-gray-500 mb-1">Epochs</div>
+                <div className="text-3xl font-black font-mono text-yellow-700">{currentEpoch}</div>
+              </div>
+              <div className="p-4 bg-white border-2 border-yellow-600">
+                <div className="text-xs uppercase font-bold text-gray-500 mb-1">Errors Left</div>
+                <div className="text-3xl font-black font-mono text-yellow-700">{misclassifiedCount}</div>
+              </div>
+              <div className="p-4 bg-white border-2 border-yellow-600">
+                <div className="text-xs uppercase font-bold text-gray-500 mb-1">Accuracy</div>
+                <div className="text-2xl font-black font-mono text-yellow-700">
+                  {((1 - misclassifiedCount / dataPoints.length) * 100).toFixed(1)}%
+                </div>
               </div>
             </div>
           </div>

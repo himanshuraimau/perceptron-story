@@ -20,10 +20,11 @@ export function Navigation() {
   // UPDATED SECTIONS LIST
   const sections = [
     { label: "Intro", href: "#introduction" },
-    { label: "Math", href: "#mathematics" },
-    { label: "Lab", href: "#training-lab" },
-    { label: "Optimization", href: "#optimization" },
-    { label: "XOR", href: "#xor-limitation" },
+    { label: "Linear", href: "#mathematics" },
+    { label: "Opt", href: "#optimization" }, 
+    { label: "XOR Flaw", href: "#xor-limitation" },
+    { label: "Multi-Layer", href: "#mlp-explainer" }, // NEW
+    { label: "Deep Lab", href: "#mlp-lab" }, // NEW
   ]
 
   const handleScroll = (href: string) => {
@@ -38,7 +39,7 @@ export function Navigation() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b-2",
           isScrolled 
-            ? "bg-background/80 backdrop-blur-md border-foreground py-3 shadow-md" 
+            ? "bg-background/90 backdrop-blur-md border-foreground py-3 shadow-md" 
             : "bg-transparent border-transparent py-6"
         )}
       >
@@ -58,7 +59,7 @@ export function Navigation() {
               <motion.button
                 key={section.href}
                 onClick={() => handleScroll(section.href)}
-                className="px-4 py-2 font-bold uppercase text-xs tracking-widest hover:bg-black hover:text-white transition-colors border border-transparent hover:border-black rounded-sm"
+                className="px-3 py-2 font-bold uppercase text-[10px] tracking-widest hover:bg-black hover:text-white transition-colors border border-transparent hover:border-black rounded-sm"
                 whileTap={{ scale: 0.95 }}
               >
                 {section.label}
