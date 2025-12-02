@@ -35,7 +35,7 @@ export function SwissSection({ id, title, accent = "default", children, classNam
              {/* Decorative Plus */}
             <div className={`hidden lg:block absolute -top-8 right-0 w-4 h-4 border-r-2 border-t-2 ${borderColor}`} />
             
-            <h2 className={`font-black text-4xl lg:text-5xl uppercase tracking-tighter leading-[0.9] mb-4 ${accentColor}`}>
+            <h2 className={`font-black text-3xl md:text-4xl lg:text-5xl uppercase tracking-tighter leading-[0.9] mb-4 ${accentColor}`}>
               {title}
             </h2>
             <div className={`h-2 w-12 ml-auto bg-black ${accent === 'red' ? 'bg-[#ff0000]' : accent === 'blue' ? 'bg-[#2a45c2]' : ''}`} />

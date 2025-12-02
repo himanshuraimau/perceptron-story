@@ -18,7 +18,7 @@ export function NumericalExamples() {
           <Calculator className="w-8 h-8" />
           <span className="font-bold uppercase tracking-widest text-sm">Numerical Examples</span>
         </div>
-        <h3 className="text-4xl md:text-5xl font-bold leading-tight">
+        <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
           Step-by-Step<br />
           <span className="text-[#2a45c2]">Problem Solving</span>
         </h3>
@@ -81,7 +81,7 @@ function ANDGateExample() {
         {/* Left: Problem Setup */}
         <div className="space-y-6">
           <div className="bg-white border-2 border-black p-6">
-            <h4 className="font-bold text-lg mb-4 uppercase tracking-wide">Training Data</h4>
+            <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide">Training Data</h4>
             <table className="w-full font-mono text-sm">
               <thead>
                 <tr className="border-b-2 border-black">
@@ -100,7 +100,7 @@ function ANDGateExample() {
           </div>
 
           <div className="bg-white border-2 border-black p-6">
-            <h4 className="font-bold text-lg mb-4 uppercase tracking-wide">Initial Parameters</h4>
+            <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide">Initial Parameters</h4>
             <ul className="space-y-2 font-mono text-sm">
               <li><span className="text-[#2a45c2] font-bold">w₁ =</span> 0.0</li>
               <li><span className="text-[#2a45c2] font-bold">w₂ =</span> 0.0</li>
@@ -113,7 +113,7 @@ function ANDGateExample() {
         {/* Right: Solution Steps */}
         <div className="space-y-6">
           <div className="bg-white border-2 border-black p-6 shadow-[8px_8px_0px_0px_rgba(42,69,194,0.2)]">
-            <h4 className="font-bold text-lg mb-4 uppercase tracking-wide flex items-center gap-2">
+            <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide flex items-center gap-2">
               <span className="bg-[#2a45c2] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">1</span>
               Epoch 1, Sample (0, 0)
             </h4>
@@ -128,7 +128,7 @@ function ANDGateExample() {
           </div>
 
           <div className="bg-white border-2 border-black p-6 shadow-[8px_8px_0px_0px_rgba(42,69,194,0.2)]">
-            <h4 className="font-bold text-lg mb-4 uppercase tracking-wide flex items-center gap-2">
+            <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide flex items-center gap-2">
               <span className="bg-[#2a45c2] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">2</span>
               Epoch 1, Sample (1, 1)
             </h4>
@@ -146,7 +146,7 @@ function ANDGateExample() {
           </div>
 
           <div className="bg-[#2a45c2] text-white border-2 border-black p-6">
-            <h4 className="font-bold text-lg mb-4 uppercase tracking-wide">Final Result (After Convergence)</h4>
+            <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide">Final Result (After Convergence)</h4>
             <div className="space-y-2 font-mono text-sm">
               <div>w₁ = 0.2, w₂ = 0.2, b = -0.3</div>
               <div className="pt-3 border-t border-white/30">
@@ -173,7 +173,7 @@ function ORGateExample() {
         {/* Left: Problem Setup */}
         <div className="space-y-6">
           <div className="bg-white border-2 border-black p-6">
-            <h4 className="font-bold text-lg mb-4 uppercase tracking-wide">Training Data</h4>
+            <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide">Training Data</h4>
             <table className="w-full font-mono text-sm">
               <thead>
                 <tr className="border-b-2 border-black">
@@ -192,7 +192,7 @@ function ORGateExample() {
           </div>
 
           <div className="bg-white border-2 border-black p-6">
-            <h4 className="font-bold text-lg mb-4 uppercase tracking-wide">Initial Parameters</h4>
+            <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide">Initial Parameters</h4>
             <ul className="space-y-2 font-mono text-sm">
               <li><span className="text-[#2a45c2] font-bold">w₁ =</span> 0.0</li>
               <li><span className="text-[#2a45c2] font-bold">w₂ =</span> 0.0</li>
@@ -205,7 +205,7 @@ function ORGateExample() {
         {/* Right: Solution Steps */}
         <div className="space-y-6">
           <div className="bg-white border-2 border-black p-6 shadow-[8px_8px_0px_0px_rgba(42,69,194,0.2)]">
-            <h4 className="font-bold text-lg mb-4 uppercase tracking-wide flex items-center gap-2">
+            <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide flex items-center gap-2">
               <span className="bg-[#2a45c2] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">1</span>
               Epoch 1, Sample (0, 1)
             </h4>
@@ -223,7 +223,7 @@ function ORGateExample() {
           </div>
 
           <div className="bg-white border-2 border-black p-6 shadow-[8px_8px_0px_0px_rgba(42,69,194,0.2)]">
-            <h4 className="font-bold text-lg mb-4 uppercase tracking-wide flex items-center gap-2">
+            <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide flex items-center gap-2">
               <span className="bg-[#2a45c2] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">2</span>
               Epoch 1, Sample (1, 0)
             </h4>
@@ -238,7 +238,7 @@ function ORGateExample() {
           </div>
 
           <div className="bg-white border-2 border-black p-6 shadow-[8px_8px_0px_0px_rgba(42,69,194,0.2)]">
-            <h4 className="font-bold text-lg mb-4 uppercase tracking-wide flex items-center gap-2">
+            <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide flex items-center gap-2">
               <span className="bg-[#2a45c2] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">3</span>
               Epoch 2, Sample (1, 0)
             </h4>
@@ -256,7 +256,7 @@ function ORGateExample() {
           </div>
 
           <div className="bg-[#2a45c2] text-white border-2 border-black p-6">
-            <h4 className="font-bold text-lg mb-4 uppercase tracking-wide">Final Result (After Convergence)</h4>
+            <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide">Final Result (After Convergence)</h4>
             <div className="space-y-2 font-mono text-sm">
               <div>w₁ = 0.2, w₂ = 0.2, b = -0.1</div>
               <div className="pt-3 border-t border-white/30">
@@ -285,7 +285,7 @@ function XORMLPExample() {
       <div className="space-y-8">
         {/* Architecture */}
         <div className="bg-white border-2 border-black p-6">
-          <h4 className="font-bold text-lg mb-4 uppercase tracking-wide">Network Architecture</h4>
+          <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide">Network Architecture</h4>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-sm">
             <div className="border-2 border-[#2a45c2] p-4 bg-[#2a45c2]/5">
               <div className="font-bold text-[#2a45c2] mb-2">Input Layer</div>
@@ -307,7 +307,7 @@ function XORMLPExample() {
         {/* Training Data */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="bg-white border-2 border-black p-6">
-            <h4 className="font-bold text-lg mb-4 uppercase tracking-wide">XOR Training Data</h4>
+            <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide">XOR Training Data</h4>
             <table className="w-full font-mono text-sm">
               <thead>
                 <tr className="border-b-2 border-black">
@@ -326,7 +326,7 @@ function XORMLPExample() {
           </div>
 
           <div className="bg-white border-2 border-black p-6">
-            <h4 className="font-bold text-lg mb-4 uppercase tracking-wide">Initial Weights</h4>
+            <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide">Initial Weights</h4>
             <div className="space-y-3 font-mono text-sm">
               <div className="text-[#2a45c2] font-bold">Input → Hidden:</div>
               <div className="pl-4 space-y-1">
@@ -346,7 +346,7 @@ function XORMLPExample() {
 
         {/* Forward Pass */}
         <div className="bg-white border-2 border-black p-6 shadow-[8px_8px_0px_0px_rgba(42,69,194,0.2)]">
-          <h4 className="font-bold text-lg mb-4 uppercase tracking-wide flex items-center gap-2">
+          <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide flex items-center gap-2">
             <span className="bg-[#2a45c2] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">1</span>
             Forward Pass: Input (1, 0)
           </h4>
@@ -371,7 +371,7 @@ function XORMLPExample() {
 
         {/* Backward Pass */}
         <div className="bg-white border-2 border-black p-6 shadow-[8px_8px_0px_0px_rgba(255,0,0,0.2)]">
-          <h4 className="font-bold text-lg mb-4 uppercase tracking-wide flex items-center gap-2">
+          <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide flex items-center gap-2">
             <span className="bg-[#ff0000] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">2</span>
             Backward Pass: Gradient Descent
           </h4>
@@ -401,7 +401,7 @@ function XORMLPExample() {
 
         {/* Final Result */}
         <div className="bg-[#2a45c2] text-white border-2 border-black p-6">
-          <h4 className="font-bold text-lg mb-4 uppercase tracking-wide">After 10,000 Epochs</h4>
+          <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide">After 10,000 Epochs</h4>
           <div className="space-y-3 font-mono text-sm">
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -443,7 +443,7 @@ function ClassificationMLPExample() {
       <div className="space-y-8">
         {/* Problem Statement */}
         <div className="bg-white border-2 border-black p-6">
-          <h4 className="font-bold text-lg mb-4 uppercase tracking-wide">Classification Task</h4>
+          <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide">Classification Task</h4>
           <p className="text-sm mb-4">
             Classify whether a student will pass (1) or fail (0) based on hours studied (x₁) and hours slept (x₂).
           </p>
@@ -467,7 +467,7 @@ function ClassificationMLPExample() {
         {/* Network Setup */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="bg-white border-2 border-black p-6">
-            <h4 className="font-bold text-lg mb-4 uppercase tracking-wide">Network: 2-3-1</h4>
+            <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide">Network: 2-3-1</h4>
             <div className="space-y-3 font-mono text-sm">
               <div>
                 <div className="text-[#2a45c2] font-bold mb-1">Input Layer:</div>
@@ -489,7 +489,7 @@ function ClassificationMLPExample() {
           </div>
 
           <div className="bg-white border-2 border-black p-6">
-            <h4 className="font-bold text-lg mb-4 uppercase tracking-wide">Initial Weights (Random)</h4>
+            <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide">Initial Weights (Random)</h4>
             <div className="space-y-3 font-mono text-xs">
               <div>
                 <div className="font-bold mb-1">W⁽¹⁾ (Input → Hidden):</div>
@@ -516,7 +516,7 @@ function ClassificationMLPExample() {
 
         {/* Training Example */}
         <div className="bg-white border-2 border-black p-6 shadow-[8px_8px_0px_0px_rgba(42,69,194,0.2)]">
-          <h4 className="font-bold text-lg mb-4 uppercase tracking-wide flex items-center gap-2">
+          <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide flex items-center gap-2">
             <span className="bg-[#2a45c2] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">1</span>
             Forward Pass: Sample (4, 6) → Pass
           </h4>
@@ -548,7 +548,7 @@ function ClassificationMLPExample() {
 
         {/* Backpropagation */}
         <div className="bg-white border-2 border-black p-6 shadow-[8px_8px_0px_0px_rgba(255,0,0,0.2)]">
-          <h4 className="font-bold text-lg mb-4 uppercase tracking-wide flex items-center gap-2">
+          <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide flex items-center gap-2">
             <span className="bg-[#ff0000] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">2</span>
             Backpropagation
           </h4>
@@ -598,7 +598,7 @@ function ClassificationMLPExample() {
 
         {/* Final Weights */}
         <div className="bg-[#2a45c2] text-white border-2 border-black p-6">
-          <h4 className="font-bold text-lg mb-4 uppercase tracking-wide">Trained Network</h4>
+          <h4 className="font-bold text-base md:text-lg mb-4 uppercase tracking-wide">Trained Network</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm font-mono">
             <div>
               <div className="opacity-70 text-xs mb-2">Test Prediction (5, 7):</div>
@@ -623,8 +623,8 @@ function ProblemCard({ title, description }: { title: string; description: strin
   return (
     <div className="bg-gradient-to-r from-[#2a45c2] to-[#ff0000] p-[2px]">
       <div className="bg-white p-6">
-        <h3 className="text-2xl font-bold mb-2">{title}</h3>
-        <p className="text-gray-700">{description}</p>
+        <h3 className="text-xl md:text-2xl font-bold mb-2">{title}</h3>
+        <p className="text-sm md:text-base text-gray-700">{description}</p>
       </div>
     </div>
   )

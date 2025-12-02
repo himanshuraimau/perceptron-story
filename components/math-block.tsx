@@ -1,35 +1,51 @@
-"use client"
+"use client";
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef } from "react";
 
 interface MathBlockProps {
-  formula: string
-  display?: boolean
-  description?: string
-  className?: string
+  formula: string;
+  display?: boolean;
+  description?: string;
+  className?: string;
 }
 
-export function MathBlock({ formula, display = true, description, className = "" }: MathBlockProps) {
-  const mathRef = useRef<HTMLDivElement>(null)
+export function MathBlock({
+  formula,
+  display = true,
+  description,
+  className = "",
+}: MathBlockProps) {
+  const mathRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (mathRef.current) {
-      // Dynamically import katex only on client side
       import("katex").then((katex) => {
         if (mathRef.current) {
           katex.default.render(formula, mathRef.current, {
             displayMode: display,
             throwOnError: false,
-          })
+          });
         }
-      })
+      });
     }
-  }, [formula, display])
+  }, [formula, display]);
 
   return (
-    <div className={`${display ? "my-6 p-4 border-l-4 border-[#2a45c2] bg-muted/10" : "inline"} ${className}`}>
-      <div ref={mathRef} className="text-center" />
-      {description && <p className="text-xs text-text-muted mt-2 text-center">{description}</p>}
+    <div className={`w-full ${className}`}>
+      {/* 
+         1. overflow-x-auto: Allows the math to scroll on small screens instead of breaking layout 
+         2. no-scrollbar: Optional utility if you want to hide the scrollbar (requires custom css)
+      */}
+      <div
+        ref={mathRef}
+        className={`${display ? "w-full overflow-x-auto py-2" : "inline"}`}
+      />
+
+      {description && (
+        <p className="text-sm font-medium text-gray-500 mt-3 text-center font-sans">
+          {description}
+        </p>
+      )}
     </div>
-  )
+  );
 }

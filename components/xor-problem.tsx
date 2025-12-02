@@ -12,10 +12,10 @@ export function XorProblem() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
       <div className="space-y-6">
-        <h3 className="text-3xl font-black uppercase tracking-tighter text-[#ff0000]">
+        <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tighter text-[#ff0000]">
           System Failure
         </h3>
-        <p className="text-lg leading-relaxed font-serif">
+        <p className="text-base md:text-lg leading-relaxed font-serif">
           The Perceptron has a fatal flaw. It is strictly a <span className="bg-[#2a45c2] text-white px-1">linear classifier</span>.
           When faced with the XOR problem, it enters an infinite loop, frantically searching for a line that does not exist.
         </p>

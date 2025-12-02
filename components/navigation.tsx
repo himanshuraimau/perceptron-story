@@ -20,12 +20,14 @@ export function Navigation() {
   // UPDATED SECTIONS LIST
   const sections = [
     { label: "Intro", href: "#introduction" },
-    { label: "Linear", href: "#mathematics" },
-    { label: "Opt", href: "#optimization" },
-    { label: "Examples", href: "#numerical-examples" }, // NEW
-    { label: "XOR Flaw", href: "#xor-limitation" },
-    { label: "Multi-Layer", href: "#mlp-explainer" }, // NEW
-    { label: "Deep Lab", href: "#mlp-lab" }, // NEW
+    { label: "Math", href: "#mathematics" },
+    { label: "Visual", href: "#interactive" },
+    { label: "Algorithm", href: "#training-rule" },
+    { label: "Lab", href: "#training-lab" },
+    { label: "Optimization", href: "#optimization" },
+    { label: "Examples", href: "#numerical-examples" },
+    { label: "XOR", href: "#xor-limitation" },
+    { label: "Future", href: "#future" },
   ]
 
   const handleScroll = (href: string) => {
@@ -95,7 +97,7 @@ export function Navigation() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.1 }}
                   onClick={() => handleScroll(section.href)}
-                  className="text-4xl font-black uppercase tracking-tighter text-left border-b-2 border-black pb-4 hover:text-[#2a45c2] hover:pl-4 transition-all"
+                  className="text-3xl md:text-4xl font-black uppercase tracking-tighter text-left border-b-2 border-black pb-4 hover:text-[#2a45c2] hover:pl-4 transition-all"
                 >
                   {section.label}
                 </motion.button>

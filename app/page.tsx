@@ -25,7 +25,7 @@ export default function Page() {
     <div className="bg-noise min-h-screen selection:bg-[#2a45c2] selection:text-white">
       
       {/* 1. HERO SECTION */}
-      <section id="introduction" className="relative min-h-screen flex flex-col pt-24 border-b-4 border-black">
+      <section id="introduction" className="relative min-h-screen flex flex-col border-b-4 border-black">
         <div className="absolute inset-0 bg-grid-pattern -z-10" />
         
         <div className="container-swiss flex-1 flex flex-col justify-center relative z-10">
@@ -77,21 +77,29 @@ export default function Page() {
       </section>
 
       {/* 2. MATHEMATICS */}
-      <SwissSection id="mathematics" title="The Math" accent="blue">
-        <ScrollReveal>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            <div className="space-y-8">
-              <p className="text-2xl font-serif leading-relaxed">
-                "It is a linear classifier. It takes input, weights it, and fires if the threshold is met."
-              </p>
-              
-              <div className="bg-white border-2 border-black p-6 shadow-[8px_8px_0px_0px_rgba(42,69,194,0.2)]">
-                <MathBlock
-                  formula="f(x) = \begin{cases} 1 & \text{if } \mathbf{w} \cdot \mathbf{x} + b > 0 \\ -1 & \text{otherwise} \end{cases}"
-                  description="The Rosenblatt Activation Function"
-                />
-              </div>
-            </div>
+     <SwissSection id="mathematics" title="The Math" accent="blue">
+  <ScrollReveal>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <div className="space-y-8">
+        <p className="text-lg md:text-2xl font-serif leading-relaxed">
+          "It is a linear classifier. It takes input, weights it, and fires if the threshold is met."
+        </p>
+        
+        {/* The Card Container */}
+        <div className="bg-white border-2 border-black shadow-[8px_8px_0px_0px_rgba(42,69,194,0.2)] flex flex-col relative overflow-hidden">
+          
+          {/* Optional: The Blue Sidebar Accent (recreating the accent from your screenshot cleanly) */}
+          <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-[#2a45c2]" />
+
+          {/* Content Wrapper with padding */}
+          <div className="p-8 pl-10"> {/* pl-10 accounts for the blue accent bar */}
+            <MathBlock
+              formula="f(x) = \begin{cases} 1 & \text{if } \mathbf{w} \cdot \mathbf{x} + b > 0 \\ -1 & \text{otherwise} \end{cases}"
+              description="The Rosenblatt Activation Function"
+            />
+          </div>
+        </div>
+      </div>
 
             <div className="grid gap-4">
               <ComponentCard 
@@ -135,7 +143,7 @@ export default function Page() {
           <div className="space-y-12">
             <div className="max-w-3xl">
               <p className="text-lg text-text-muted mb-4 font-mono uppercase tracking-widest">How it learns</p>
-              <h3 className="text-4xl md:text-5xl font-bold leading-none mb-8">
+              <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-none mb-8">
                 Error Correction <br/> Learning Rule
               </h3>
             </div>
@@ -143,7 +151,7 @@ export default function Page() {
             <TrainingAlgorithm />
 
             <div className="mt-24 pt-12 border-t-2 border-dashed border-black/20">
-              <h3 className="font-bold text-2xl uppercase tracking-widest mb-8 text-[#2a45c2]">
+              <h3 className="font-bold text-xl md:text-2xl uppercase tracking-widest mb-8 text-[#2a45c2]">
                 Capabilities
               </h3>
               <AndOrDemo />
@@ -165,7 +173,7 @@ export default function Page() {
                 <Zap className="w-5 h-5 fill-current" />
                 <span className="font-mono text-sm uppercase">Live Simulation</span>
               </div>
-              <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter">
+              <h2 className="text-4xl md:text-5xl lg:text-7xl font-black uppercase tracking-tighter">
                 Training Lab
               </h2>
             </div>
@@ -191,7 +199,7 @@ export default function Page() {
                     <Mountain className="w-6 h-6" />
                     <span className="font-bold uppercase tracking-widest text-sm">Gradient Descent</span>
                  </div>
-                 <h3 className="text-4xl font-bold leading-tight mb-6">
+                 <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight mb-6">
                    Walking Down the <br/> Error Mountain
                  </h3>
                  <p className="text-lg leading-relaxed text-gray-700">
@@ -230,7 +238,7 @@ export default function Page() {
       <SwissSection id="future" title="The Future">
         <ScrollReveal>
           <div className="space-y-12">
-            <p className="text-2xl md:text-4xl font-black leading-tight max-w-4xl">
+            <p className="text-xl md:text-2xl lg:text-4xl font-black leading-tight max-w-4xl">
               "The perceptron was the spark. <span className="text-[#2a45c2] underline decoration-4 decoration-[#ff0000]">Deep Learning</span> is the fire."
             </p>
 
@@ -288,12 +296,12 @@ function ComponentCard({ symbol, title, desc, color }: { symbol: string, title: 
   const bg = color === 'blue' ? 'bg-[#2a45c2]' : color === 'red' ? 'bg-[#ff0000]' : 'bg-black'
   return (
     <div className="flex group">
-      <div className={`${bg} text-white w-16 flex items-center justify-center text-2xl font-serif italic group-hover:w-20 transition-all duration-300`}>
+      <div className={`${bg} text-white w-12 md:w-16 flex items-center justify-center text-xl md:text-2xl font-serif italic group-hover:w-16 md:group-hover:w-20 transition-all duration-300`}>
         {symbol}
       </div>
-      <div className="flex-1 border-y-2 border-r-2 border-black p-4 bg-white">
+      <div className="flex-1 border-y-2 border-r-2 border-black p-3 md:p-4 bg-white">
         <h4 className="font-bold uppercase tracking-widest text-xs mb-1 text-gray-500">{title}</h4>
-        <p className="font-medium">{desc}</p>
+        <p className="font-medium text-sm md:text-base">{desc}</p>
       </div>
     </div>
   )
@@ -305,7 +313,7 @@ function FutureCard({ title, subtitle, desc, icon, className="" }: any) {
       <div className="mb-6 opacity-50 group-hover:opacity-100 group-hover:text-[#ff0000] transition-colors">
         {icon}
       </div>
-      <h3 className="text-3xl font-black uppercase tracking-tighter mb-2">{title}</h3>
+      <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tighter mb-2">{title}</h3>
       <p className="font-mono text-xs uppercase tracking-widest mb-4 opacity-70 border-b pb-2 inline-block border-current">{subtitle}</p>
       <p className="text-sm leading-relaxed opacity-80">{desc}</p>
     </div>
