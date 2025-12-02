@@ -263,8 +263,8 @@ export default function Page() {
             <div className="space-y-4 font-mono text-sm text-white/80">
               <p>Designed for educational purposes.</p>
               <div className="flex gap-4 uppercase font-bold text-white">
-                <a href="#" className="hover:underline decoration-2 decoration-[#ff0000]">Github</a>
-                <a href="#" className="hover:underline decoration-2 decoration-[#ff0000]">Twitter</a>
+                <a href="https://github.com/himanshuraimau" className="hover:underline decoration-2 decoration-[#ff0000]">Github</a>
+                <a href="https://x.com/himanshura_i" className="hover:underline decoration-2 decoration-[#ff0000]">X</a>
               </div>
             </div>
           </div>

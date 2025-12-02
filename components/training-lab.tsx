@@ -62,20 +62,20 @@ export function TrainingLab() {
       if (type === "and") {
         // AND problem: only (1,1) is true
         return [
-          { x: -0.7, y: -0.7, label: -1, misclassified: false },
-          { x: -0.7, y: 0.7, label: -1, misclassified: false },
-          { x: 0.7, y: -0.7, label: -1, misclassified: false },
-          { x: 0.7, y: 0.7, label: 1, misclassified: false },
+          { x: -0.7, y: -0.7, label: -1 as const, misclassified: false },
+          { x: -0.7, y: 0.7, label: -1 as const, misclassified: false },
+          { x: 0.7, y: -0.7, label: -1 as const, misclassified: false },
+          { x: 0.7, y: 0.7, label: 1 as const, misclassified: false },
         ]
       }
 
       if (type === "or") {
         // OR problem: all except (0,0) are true
         return [
-          { x: -0.7, y: -0.7, label: -1, misclassified: false },
-          { x: -0.7, y: 0.7, label: 1, misclassified: false },
-          { x: 0.7, y: -0.7, label: 1, misclassified: false },
-          { x: 0.7, y: 0.7, label: 1, misclassified: false },
+          { x: -0.7, y: -0.7, label: -1 as const, misclassified: false },
+          { x: -0.7, y: 0.7, label: 1 as const, misclassified: false },
+          { x: 0.7, y: -0.7, label: 1 as const, misclassified: false },
+          { x: 0.7, y: 0.7, label: 1 as const, misclassified: false },
         ]
       }
 
@@ -87,12 +87,11 @@ export function TrainingLab() {
       for (let i = 0; i < points; i++) {
         const x = Math.random() * 2 - 1
         const y = Math.random() * 2 - 1
-        let trueLabel = trueW1 * x + trueW2 * y + trueBias > 0 ? (1 as const) : (-1 as const)
+        const baseLabel = trueW1 * x + trueW2 * y + trueBias > 0 ? 1 : -1
 
-        // Add noise
-        if (noiseLevel > 0 && Math.random() < noiseLevel / 100) {
-          trueLabel = trueLabel === 1 ? (-1 as const) : (1 as const)
-        }
+        // Add noise - flip label with probability noiseLevel
+        const shouldFlip = noiseLevel > 0 && Math.random() < noiseLevel / 100
+        const trueLabel: 1 | -1 = shouldFlip ? (baseLabel === 1 ? -1 : 1) : baseLabel
 
         newPoints.push({
           x,
@@ -431,7 +430,7 @@ export function TrainingLab() {
                 {/* Step Header */}
                 <div className="flex justify-between items-center pb-4 border-b-2 border-dashed border-black/10">
                   <div className="font-mono text-sm">
-                    <span className="text-gray-500">Epoch:</span> <b>{lastStep.epoch}</b>
+                    <span className="text-gray-900">Epoch:</span> <b className="text-gray-900">{lastStep.epoch}</b>
                   </div>
                   <div className="px-3 py-1 bg-[#2a45c2]/10 text-[#2a45c2] text-xs font-bold uppercase border border-[#2a45c2]/20">
                     Training Step {currentStep + 1}
@@ -442,7 +441,7 @@ export function TrainingLab() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 bg-[#2a45c2]/5 border-l-4 border-[#2a45c2]">
                     <div className="text-xs font-bold uppercase text-[#2a45c2] mb-2">Selected Point</div>
-                    <div className="font-mono text-sm space-y-1">
+                    <div className="font-mono text-sm space-y-1 text-gray-900">
                       <div>x₁ = <b>{lastStep.point.x.toFixed(3)}</b></div>
                       <div>x₂ = <b>{lastStep.point.y.toFixed(3)}</b></div>
                       <div className="pt-2 border-t border-[#2a45c2]/20">
@@ -453,11 +452,11 @@ export function TrainingLab() {
 
                   <div className="p-4 bg-[#ff0000]/5 border-l-4 border-[#ff0000]">
                     <div className="text-xs font-bold uppercase text-[#ff0000] mb-2">Perceptron Output</div>
-                    <div className="font-mono text-sm space-y-1">
-                      <div className="text-xs text-gray-600">
+                    <div className="font-mono text-sm space-y-1 text-gray-900">
+                      <div className="text-xs text-gray-900">
                         sum = w₁x₁ + w₂x₂ + b
                       </div>
-                      <div className="text-xs">
+                      <div className="text-xs text-gray-900">
                         = {lastStep.oldWeights[0].toFixed(3)} × {lastStep.point.x.toFixed(3)} + {lastStep.oldWeights[1].toFixed(3)} × {lastStep.point.y.toFixed(3)} + {lastStep.oldBias.toFixed(3)}
                       </div>
                       <div className="pt-2 border-t border-[#ff0000]/20">
@@ -470,7 +469,7 @@ export function TrainingLab() {
                 {/* Error Calculation */}
                 <div className="p-4 bg-yellow-50 border-l-4 border-yellow-500">
                   <div className="text-xs font-bold uppercase text-yellow-700 mb-2">Error Calculation</div>
-                  <div className="font-mono text-sm">
+                  <div className="font-mono text-sm text-gray-900">
                     error = (t - o) = {lastStep.point.label} - ({lastStep.calculatedOutput}) = <b className="text-yellow-700 text-lg">{lastStep.error}</b>
                   </div>
                 </div>

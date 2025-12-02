@@ -78,7 +78,7 @@ export function WeightTrajectoryPlot({ history, currentWeights }: WeightTrajecto
            </g>
         </svg>
 
-        <div className="absolute bottom-2 left-2 text-[10px] font-mono bg-white p-1 border border-black">
+        <div className="absolute bottom-2 left-2 text-[10px] text-gray-900 font-mono bg-white p-1 border border-black">
            Start: ({history[0]?.w1.toFixed(2) ?? 0}, {history[0]?.w2.toFixed(2) ?? 0})
         </div>
       </div>
