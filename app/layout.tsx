@@ -21,9 +21,7 @@ export const metadata: Metadata = {
   title: "The Perceptron | Swiss Grid",
   description:
     "An interactive educational exploration of the Perceptron algorithm through Swiss design principles. Visualize how the building block of neural networks learns.",
-  generator: "v0.app",
   keywords: ["perceptron", "neural network", "machine learning", "AI", "education", "interactive visualization"],
-  authors: [{ name: "v0", url: "https://v0.app" }],
   openGraph: {
     title: "The Perceptron",
     description: "Interactive educational visualization of the Perceptron algorithm",
