@@ -1,0 +1,66 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  --color-background: oklch(0.98 0 0);
+  /* Off-white paper look */
+  --color-foreground: oklch(0.15 0 0);
+  /* Soft black */
+  --color-blue-600: #2a45c2;
+  --color-red-600: #ff0000;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Selection color for that digital feel */
+  ::selection {
+    background-color: var(--color-blue-600);
+    color: white;
+  }
+}
+
+@layer utilities {
+
+  /* Swiss Container: Enforces grid alignment */
+  .container-swiss {
+    @apply max-w-7xl mx-auto px-6 md:px-12 w-full;
+  }
+
+  /* Grid Background Pattern */
+  .bg-grid-pattern {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  }
+
+  /* Subtle Noise Texture for "Paper" feel */
+  .bg-noise {
+    position: relative;
+  }
+
+  .bg-noise::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  /* Typography Utilities */
+  .text-huge {
+    font-size: clamp(3rem, 8vw, 9rem);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    font-weight: 900;
+  }
+}
